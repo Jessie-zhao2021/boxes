@@ -1,33 +1,43 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import boxes from './boxes'
+import Box from './Box'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [squares, setSquares] = React.useState(boxes)
+  function toggle(id){
+    setSquares(prevSquares => {
+      const newSquares = []
+      for(let i = 0; i < prevSquares.length; i++) {
+          const currentSquare = prevSquares[i]
+          if(currentSquare.id === id) {
+              const updatedSquare = {
+                  ...currentSquare,
+                  on: !currentSquare.on
+              }
+              newSquares.push(updatedSquare)
+          } else {
+              newSquares.push(currentSquare)
+          }
+      }
+      return newSquares
+  })
+}
+
+  
+
+  const squareElement = squares.map(square=>(
+    <Box key={square.id}
+         id={square.id}
+         on={square.on}
+         toggle={toggle}
+    />
+  ))
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+       <main>
+         {squareElement}
+       </main>
   )
 }
 
