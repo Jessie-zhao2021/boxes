@@ -4,7 +4,7 @@ import boxes from './boxes'
 import Box from './Box'
 
 function App() {
-  const [squares, setSquares] = React.useState(boxes)
+  const [squares, setSquares] = useState(boxes)
   function toggle(id){
     setSquares(prevSquares => {
       const newSquares = []
